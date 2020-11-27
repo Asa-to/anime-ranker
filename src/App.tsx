@@ -1,16 +1,17 @@
-import React, { FC } from 'react';
-
-import getAnimeList from './util/getAnimeList';
-import { Anime } from './types';
+import React, { FC } from 'react'; 
+import useAnimes from './hooks/useAnimes';
 
 const App: FC = () => {
-    const animeList: Anime[] = getAnimeList(2020, 3);
-    console.log(animeList);
+  const {animes, loading} = useAnimes();
 
-    return (
-        <div>
-        </div>
-    )
+  console.log(animes);
+  return (
+    <div>
+      {animes.map((anime) => {
+        return <p>title: {anime.title} twitter: {anime.twitter_account} </p>
+      })}
+    </div>
+  )
 }
 
 export default App;
