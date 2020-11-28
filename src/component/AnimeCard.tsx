@@ -22,7 +22,7 @@ const AnimeCard: FC<{anime: Anime}> = ({ anime }) => {
   }
 
   return (
-    <Card style={cardStyle}>
+    <Card style={cardStyle} className='shadow-sm my-1'>
       <Card.Img variant='top' src='https://pbs.twimg.com/profile_images/1242713073732874241/VdHanJil_400x400.jpg'/>
       <Card.Title>{anime.title}</Card.Title>
       <Card.Text style={textStyle}>フォロワー数： {anime.follower}</Card.Text>

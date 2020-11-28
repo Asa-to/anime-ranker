@@ -15,7 +15,8 @@ const App: FC = () => {
   const style:React.CSSProperties = {
     display: 'flex',
     flexWrap: 'wrap',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   }
 
   return (
