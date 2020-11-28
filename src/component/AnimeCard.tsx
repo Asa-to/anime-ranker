@@ -5,16 +5,28 @@ import { Anime } from '../types';
 
 const AnimeCard: FC<{anime: Anime}> = ({ anime }) => {
 
-  const style: React.CSSProperties = {
-    width: '300px'
+  const cardStyle: React.CSSProperties = {
+    width: '300px',
+    height: '430px',
+    padding: '5px',
+  }
+
+  const buttonStyle: React.CSSProperties = {
+    position: 'absolute',
+    bottom: 0,
+  }
+
+  const textStyle: React.CSSProperties = {
+    position: 'absolute',
+    bottom: '30px',
   }
 
   return (
-    <Card style={style}>
+    <Card style={cardStyle}>
       <Card.Img variant='top' src='https://pbs.twimg.com/profile_images/1242713073732874241/VdHanJil_400x400.jpg'/>
       <Card.Title>{anime.title}</Card.Title>
-      <Card.Text>フォロワー数： {anime.follower}</Card.Text>
-      <Button variant="outline-primary" href={anime.twitter_url}>Go twitter</Button>
+      <Card.Text style={textStyle}>フォロワー数： {anime.follower}</Card.Text>
+      <Button variant="outline-primary" style={buttonStyle} href={anime.twitter_url}>Go Twitter</Button>
     </Card>
   )
 }
