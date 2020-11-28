@@ -6,6 +6,7 @@ import { ListGroup } from 'react-bootstrap';
 import AnimeCard from './component/AnimeCard';
 import MyHeader from './component/MyHeader';
 import MyForms from './component/MyForms';
+import NoData from './component/NoData';
 
 const App: FC = () => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -24,9 +25,9 @@ const App: FC = () => {
       <MyHeader />
       <MyForms setYear={setYear} setSeason={setSeason}/>
       <ListGroup style={style}>
-        {animes.map((anime) => 
+        {animes.length ? animes.map((anime) => 
           <AnimeCard key={anime.id} anime={anime} />
-        )}
+        ) : <NoData />}
       </ListGroup>
     </>
   )

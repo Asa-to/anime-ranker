@@ -9,6 +9,7 @@ const AnimeCard: FC<{anime: Anime}> = ({ anime }) => {
     width: '300px',
     height: '430px',
     padding: '5px',
+    margin: 'auto',
   }
 
   const buttonStyle: React.CSSProperties = {

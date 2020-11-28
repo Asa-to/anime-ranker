@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import {Anime} from '../types';
 
-const useAnimes = (year = 2020, season = 1) => {
+const useAnimes = (year = new Date().getFullYear(), season = 1) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(false);
 
