@@ -19,7 +19,7 @@ const AnimeCard: FC<{anime: Anime}> = ({ anime }) => {
 
   const textStyle: React.CSSProperties = {
     position: 'absolute',
-    bottom: '30px',
+    bottom: '25px',
   }
 
   return (
