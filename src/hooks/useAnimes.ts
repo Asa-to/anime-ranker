@@ -27,8 +27,8 @@ const useAnimes = (year = new Date().getFullYear(), season = 1) => {
       for(const twitter of twitter_result.data.user_data_list) {
         const {screen_name, icon_url, followers} = twitter;
         const index = animeList.findIndex((anime) => anime.twitter_account === screen_name);
-        animeList[index].iconURL = icon_url;
-        animeList[index].follower = followers;
+        if(index !== -1)animeList[index].iconURL = icon_url;
+        if(index !== -1)animeList[index].follower = followers;
       }
       // アニメデータをフォロワー順にソートする。ついでにtwitterにデータがないアカウントを除く
       animeList.sort((first, second) => first.follower < second.follower ? 1 : -1);
