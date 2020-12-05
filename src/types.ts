@@ -3,5 +3,6 @@ export type Anime = {
     title: string,
     twitter_account: string,
     twitter_url: string,
-    follower: number
+    follower: number,
+    iconURL: string
 }

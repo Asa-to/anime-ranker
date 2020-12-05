@@ -11,24 +11,28 @@ const useAnimes = (year = new Date().getFullYear(), season = 1) => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      let twitterURL = `https://api.moemoe.tokyo/anime/v1/twitter/follower/status?accounts=`;
       const animeList: Anime[] = [];
-      {
-        const result = await axios(animeURL);
-        for(const anime of result.data) {
-            const {id, title, twitter_account} = anime;
-            twitterURL += (twitter_account + ',');
-            animeList.push({id, title, twitter_account, twitter_url: 'https://twitter.com/' + twitter_account, follower: NaN}); 
-        }
+      const users: string[] = [];
+      // アニメの情報をapiから引っ張ってくる
+      const result = await axios(animeURL);
+      // twitter情報だけを抜き出して他はanimeListにマージ
+      for(const anime of result.data) {
+          const {id, title, twitter_account} = anime;
+          users.push(twitter_account);
+          animeList.push({id, title, twitter_account, twitter_url: `https://twitter.com/${twitter_account}`, follower: NaN, iconURL: ''}); 
       }
-      const result = await axios(twitterURL);
-      for(const title of Object.keys(result.data)) {
-        const index = animeList.findIndex((anime) => anime.twitter_account === title);
-        animeList[index].follower = result.data[title].follower;
+      // アニメのtwitterのフォロワー数とアイコンを取得する
+      const twitter_result = await axios(`https://asia-northeast1-anime-ranker.cloudfunctions.net/twitter_user_data_list?accounts=${users.join(',')}`);
+      // 取得したデータをanimeListにマージ
+      for(const twitter of twitter_result.data.user_data_list) {
+        const {screen_name, icon_url, followers} = twitter;
+        const index = animeList.findIndex((anime) => anime.twitter_account === screen_name);
+        animeList[index].iconURL = icon_url;
+        animeList[index].follower = followers;
       }
-
+      // アニメデータをフォロワー順にソートする。ついでにtwitterにデータがないアカウントを除く
       animeList.sort((first, second) => first.follower < second.follower ? 1 : -1);
-      setAnimes(animeList);
+      setAnimes(animeList.filter((anime) => anime.follower && anime.iconURL));
       setLoading(false);
     }
 
