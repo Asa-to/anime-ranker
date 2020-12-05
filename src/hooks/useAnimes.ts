@@ -32,7 +32,7 @@ const useAnimes = (year = new Date().getFullYear(), season = 1) => {
       }
       // アニメデータをフォロワー順にソートする。ついでにtwitterにデータがないアカウントを除く
       animeList.sort((first, second) => first.follower < second.follower ? 1 : -1);
-      setAnimes(animeList.filter((anime) => anime.follower && anime.iconURL));
+      setAnimes(animeList.filter((anime) => 1000 < anime.follower && anime.iconURL));
       setLoading(false);
     }
 
