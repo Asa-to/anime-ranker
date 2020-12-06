@@ -5,12 +5,12 @@ import {Anime} from '../types';
 
 const useAnimes = (year = new Date().getFullYear(), season = 1) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const animeURL = `https://api.moemoe.tokyo/anime/v1/master/${year}/${season}`;
   useEffect(() => {
+    setLoading(true);
     const load = async () => {
-      setLoading(true);
       const animeList: Anime[] = [];
       const users: string[] = [];
       // アニメの情報をapiから引っ張ってくる
