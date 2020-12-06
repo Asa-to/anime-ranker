@@ -13,7 +13,7 @@ const App: FC = () => {
   const [cookies, setCookie] = useCookies(['year', 'season']);
   const [year, setYear] = useState(cookies.year || new Date().getFullYear());
   const [season, setSeason] = useState(cookies.season || 1);
-  const {animes} = useAnimes(year, season);
+  const {animes, loading} = useAnimes(year, season);
 
   setCookie('year', year);
   setCookie('season', season);
@@ -30,7 +30,7 @@ const App: FC = () => {
       <MyHeader />
       <MyForms setYear={setYear} setSeason={setSeason} year={year} season={season} />
       <ListGroup style={style}>
-        {animes.length ? animes.map((anime) => 
+        {animes.length || loading ? animes.map((anime) => 
           <AnimeCard key={anime.id} anime={anime} />
         ) : <NoData />}
       </ListGroup>
