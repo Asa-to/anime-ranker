@@ -29,7 +29,9 @@ const AnimeCard: FC<{anime: Anime}> = ({ anime }) => {
   }
   return (
     <Card style={cardStyle} className='shadow-sm my-1'>
-      <Card.Img variant='top' src={anime.iconURL} />
+      <Card.Link href={anime.public_url} target='_blank'>
+        <Card.Img variant='top' src={anime.iconURL} />
+      </Card.Link>
       <Card.Title style={titleStyle}>{anime.title}</Card.Title>
       <Card.Text style={textStyle}>フォロワー数： {anime.follower}</Card.Text>
       <Button variant="outline-primary" style={buttonStyle} target='_blank' href={anime.twitter_url}>Go Twitter</Button>

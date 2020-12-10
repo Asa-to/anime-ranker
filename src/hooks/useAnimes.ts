@@ -17,9 +17,9 @@ const useAnimes = (year = new Date().getFullYear(), season = 1) => {
       const result = await axios(animeURL);
       // twitter情報だけを抜き出して他はanimeListにマージ
       for(const anime of result.data) {
-          const {id, title, twitter_account} = anime;
+          const {id, title, twitter_account, public_url} = anime;
           users.push(twitter_account);
-          animeList.push({id, title, twitter_account, twitter_url: `https://twitter.com/${twitter_account}`, follower: NaN, iconURL: ''}); 
+          animeList.push({id, title, twitter_account, twitter_url: `https://twitter.com/${twitter_account}`, public_url, follower: NaN, iconURL: ''}); 
       }
       // アニメのtwitterのフォロワー数とアイコンを取得する
       const twitter_result = await axios(`https://asia-northeast1-anime-ranker.cloudfunctions.net/twitter_user_data_list?accounts=${users.join(',')}`);
