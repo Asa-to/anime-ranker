@@ -3,9 +3,8 @@ import { Col, Form, Button } from 'react-bootstrap';
 
 const range = (start: number, end: number) => Array.from({ length: (end - start) + 1}, (_, i) => start + i);
 
-const YearOptions: FC = () => {
+const YearOptions: FC<{thisYear: number}> = ({thisYear}) => {
   const minYear = 2014;
-  const thisYear = new Date().getFullYear();
   
   return (
     <>
@@ -41,7 +40,7 @@ const MyForms: FC<{setYear: React.Dispatch<number>, setSeason: React.Dispatch<nu
       <Form.Row style={{width: '300px'}} className='mx-auto my-3'>
         <Col>
           <Form.Control as='select' defaultValue={year} ref={yearRef} custom>
-            <YearOptions />
+            <YearOptions thisYear={new Date().getFullYear()}/>
           </Form.Control>
         </Col>
         <Col>
