@@ -5,10 +5,10 @@ import { CookiesProvider } from 'react-cookie';
 import App from './App';
 
 ReactDOM.render(
-  <CookiesProvider>
-    <React.StrictMode>
+  <React.StrictMode>
+    <CookiesProvider>
       <App />
-    </React.StrictMode>
-  </CookiesProvider>,
+    </CookiesProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );

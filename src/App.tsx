@@ -8,12 +8,14 @@ import AnimeCard from './component/AnimeCard';
 import MyHeader from './materialComponent/MyHeader';
 import MyForms from './component/MyForms';
 import NoData from './materialComponent/NoData';
+import { Backdrop } from '@material-ui/core';
+import BackdropCercular from './materialComponent/BackdropCercular';
 
 const App: FC = () => {
   const [cookies, setCookie] = useCookies(['year', 'season']);
   const [year, setYear] = useState(cookies.year || new Date().getFullYear());
   const [season, setSeason] = useState(cookies.season || 1);
-  const {animes, loading, isInited} = useAnimes(year, season);
+  const {animes, isLoading, isInited} = useAnimes(year, season);
 
   setCookie('year', year);
   setCookie('season', season);
@@ -27,6 +29,7 @@ const App: FC = () => {
 
   return (
     <>
+      <BackdropCercular open={isLoading} />
       <MyHeader />
       <MyForms setYear={setYear} setSeason={setSeason} year={year} season={season} />
       <ListGroup style={style}>
