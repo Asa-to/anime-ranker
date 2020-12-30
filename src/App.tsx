@@ -5,15 +5,15 @@ import { ListGroup } from 'react-bootstrap';
 import { useCookies } from 'react-cookie';
 
 import AnimeCard from './component/AnimeCard';
-import MyHeader from './component/MyHeader';
+import MyHeader from './materialComponent/MyHeader';
 import MyForms from './component/MyForms';
-import NoData from './component/NoData';
+import NoData from './materialComponent/NoData';
 
 const App: FC = () => {
   const [cookies, setCookie] = useCookies(['year', 'season']);
   const [year, setYear] = useState(cookies.year || new Date().getFullYear());
   const [season, setSeason] = useState(cookies.season || 1);
-  const {animes, loading} = useAnimes(year, season);
+  const {animes, loading, isInited} = useAnimes(year, season);
 
   setCookie('year', year);
   setCookie('season', season);
@@ -30,9 +30,11 @@ const App: FC = () => {
       <MyHeader />
       <MyForms setYear={setYear} setSeason={setSeason} year={year} season={season} />
       <ListGroup style={style}>
-        {animes.length || loading ? animes.map((anime) => 
-          <AnimeCard key={anime.id} anime={anime} />
-        ) : <NoData />}
+        { 
+          isInited && animes.length === 0 ? 
+            <NoData /> :
+            animes.map((anime) => <AnimeCard key={anime.id} anime={anime} />)
+        }
       </ListGroup>
     </>
   )

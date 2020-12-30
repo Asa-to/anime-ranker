@@ -8,7 +8,7 @@ const YearOptions: FC<{thisYear: number}> = ({thisYear}) => {
   
   return (
     <>
-      {range(minYear, thisYear).reverse().map((year) => {
+      {range(minYear, thisYear+1).reverse().map((year) => {
         return <option key={year} value={year} >{year}年</option>
       })}
     </>

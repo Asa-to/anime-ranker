@@ -5,7 +5,8 @@ import {Anime} from '../types';
 
 const useAnimes = (year = new Date().getFullYear(), season = 1) => {
   const [animes, setAnimes] = useState<Anime[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isInited, setIsInited] = useState(false);
 
   const animeURL = `https://api.moemoe.tokyo/anime/v1/master/${year}/${season}`;
   useEffect(() => {
@@ -22,23 +23,26 @@ const useAnimes = (year = new Date().getFullYear(), season = 1) => {
           animeList.push({id, title, twitter_account, twitter_url: `https://twitter.com/${twitter_account}`, public_url, follower: NaN, iconURL: ''}); 
       }
       // アニメのtwitterのフォロワー数とアイコンを取得する
-      const twitter_result = await axios(`https://asia-northeast1-anime-ranker.cloudfunctions.net/twitter_user_data_list?accounts=${users.join(',')}`);
-      // 取得したデータをanimeListにマージ
-      for(const twitter of twitter_result.data.user_data_list) {
-        const {screen_name, icon_url, followers} = twitter;
-        const index = animeList.findIndex((anime) => anime.twitter_account === screen_name);
-        if(index !== -1)animeList[index].iconURL = icon_url;
-        if(index !== -1)animeList[index].follower = followers;
+      if(users.length){
+        const twitter_result = await axios(`https://asia-northeast1-anime-ranker.cloudfunctions.net/twitter_user_data_list?accounts=${users.join(',')}`);
+        // 取得したデータをanimeListにマージ
+        for(const twitter of twitter_result.data.user_data_list) {
+          const {screen_name, icon_url, followers} = twitter;
+          const index = animeList.findIndex((anime) => anime.twitter_account === screen_name);
+          if(index !== -1)animeList[index].iconURL = icon_url;
+          if(index !== -1)animeList[index].follower = followers;
+        }
+        // アニメデータをフォロワー順にソートする。ついでにtwitterにデータがないアカウントを除く
+        animeList.sort((first, second) => first.follower < second.follower ? 1 : -1);
       }
-      // アニメデータをフォロワー順にソートする。ついでにtwitterにデータがないアカウントを除く
-      animeList.sort((first, second) => first.follower < second.follower ? 1 : -1);
       setAnimes(animeList.filter((anime) => 1000 < anime.follower && anime.iconURL));
       setLoading(false);
+      setIsInited(true);
     }
 
     load();
   }, [animeURL])
-  return {animes, loading};
+  return {animes, loading, isInited};
 }
 
 export default useAnimes;
