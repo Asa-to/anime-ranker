@@ -38,8 +38,8 @@ const useAnimes = (year = new Date().getFullYear(), season = 1) => {
   const animeURL = `https://api.moemoe.tokyo/anime/v1/master/${year}/${season}`;
 
   useEffect(() => {
-    setIsLoading(true);
     const load = async () => {
+      setIsLoading(true);
       // アニメの情報をapiから引っ張ってくる
       const { animeList, users } = await getAnimes(animeURL);
       if(users.length){

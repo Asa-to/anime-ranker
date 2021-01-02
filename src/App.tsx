@@ -4,17 +4,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ListGroup } from 'react-bootstrap';
 import { useCookies } from 'react-cookie';
 
-import AnimeCard from './component/AnimeCard';
+import AnimeCard from './materialComponent/AnimeCard';
 import MyHeader from './materialComponent/MyHeader';
-import MyForms from './component/MyForms';
+import MyForms from './materialComponent/MyForms';
 import NoData from './materialComponent/NoData';
-import { Backdrop } from '@material-ui/core';
 import BackdropCercular from './materialComponent/BackdropCercular';
 
 const App: FC = () => {
   const [cookies, setCookie] = useCookies(['year', 'season']);
-  const [year, setYear] = useState(cookies.year || new Date().getFullYear());
-  const [season, setSeason] = useState(cookies.season || 1);
+  // const [year, setYear] = useState(cookies.year | new Date().getFullYear());
+  const [year, setYear] = useState(cookies.year);
+  const [season, setSeason] = useState(cookies.season | 1);
   const {animes, isLoading, isInited} = useAnimes(year, season);
 
   setCookie('year', year);
