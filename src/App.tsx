@@ -12,8 +12,7 @@ import BackdropCercular from './materialComponent/BackdropCercular';
 
 const App: FC = () => {
   const [cookies, setCookie] = useCookies(['year', 'season']);
-  // const [year, setYear] = useState(cookies.year | new Date().getFullYear());
-  const [year, setYear] = useState(cookies.year);
+  const [year, setYear] = useState(cookies.year | new Date().getFullYear());
   const [season, setSeason] = useState(cookies.season | 1);
   const {animes, isLoading, isInited} = useAnimes(year, season);
 
