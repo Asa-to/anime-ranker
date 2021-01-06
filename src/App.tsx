@@ -12,12 +12,13 @@ import BackdropCercular from './materialComponent/BackdropCercular';
 
 const App: FC = () => {
   const [cookies, setCookie] = useCookies(['year', 'season']);
-  const [year, setYear] = useState(cookies.year | new Date().getFullYear());
-  const [season, setSeason] = useState(cookies.season | 1);
+  const [year, setYear] = useState(cookies.year || new Date().getFullYear());
+  const [season, setSeason] = useState(cookies.season || 1);
+  console.log(year, 'year ', cookies.year, 'cookie');
   const {animes, isLoading, isInited} = useAnimes(year, season);
 
-  setCookie('year', year);
-  setCookie('season', season);
+  setCookie('year', year, { path: '/'});
+  setCookie('season', season, { path: '/'});
 
   const style:React.CSSProperties = {
     display: 'flex',
